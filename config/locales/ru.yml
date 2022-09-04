@@ -1,0 +1,54 @@
+---
+ru:
+  activerecord:
+    models:
+      spree/taxon:
+        other: Таксоны
+    attributes:
+      spree/price:
+        city: Город
+
+
+  spree:
+    hints:
+      spree/shipping_method:
+        available_to_all: Доступен для всех складов
+    admin:
+      promotion_status:
+        active: Активна
+      variants:
+        form:
+          options: Товарные опции
+          properties: Свойства
+      prices:
+        master_variant_table:
+          master_variant: Основной вариант
+        table:
+          variant_pricing: Цены вариантов
+      order:
+        events:
+          approve: Одобрить
+          cancel: Отменить
+          resume: Возобновить
+
+
+    
+    payment_states:
+      checkout: Оформлен
+      completed: Завершена
+    actions:
+      send_email: Отправить письмо
+    name_contains: Имя содержит
+    applies_to_all_variant_properties: Применяется ко всем свойствам вариантов
+    character_limit: Ограничение по кол-ву символов
+    download_promotion_codes_list: Скачать список промо-кодов
+    discount_rules: Правила применения скидки
+    adjustment_type: Тип корректировки
+    
+    
+    
+    info_number_of_skus_not_shown:
+      many: и %{count} других
+      one: и еще один
+      few: ""
+      other: и %{count} других
