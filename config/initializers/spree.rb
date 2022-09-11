@@ -11,7 +11,7 @@ Spree.config do |config|
   config.mails_from = "store@example.com"
 
   # Uncomment to stop tracking inventory levels in the application
-  # config.track_inventory_levels = false
+  config.track_inventory_levels = false
 
   # When set, product caches are only invalidated when they fall below or rise
   # above the inventory_cache_threshold that is set. Default is to invalidate cache on
@@ -53,17 +53,22 @@ end
 Spree::Backend::Config.configure do |config|
   config.locale = 'ru'
 
-  # Uncomment and change the following configuration if you want to add
-  # a new menu item:
-  #
-  # config.menu_items << config.class::MenuItem.new(
-  #   [:section],
-  #   'icon-name',
-  #   url: 'https://solidus.io/'
-  # )
-
+  #config.menu_items << config.class::MenuItem.new(
+  #  "Контент",
+  #  'icon-name',
+  #  url: '/admin/reviews'
+  #)
+  
+  config.menu_items << config.class::MenuItem.new(
+    :content,
+    'edit',
+    label: :content,
+    partial: 'spree/admin/shared/content_sub_menu',
+    url: :admin_stores_path,
+    position: 5
+  )
+  
   # Custom frontend product path
-  #
   # config.frontend_product_path = ->(template_context, product) {
   #   template_context.spree.product_path(product)
   # }

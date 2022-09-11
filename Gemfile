@@ -22,23 +22,17 @@ gem "canonical-rails"
 gem "solidus_support"
 gem "truncate_html"
 gem "view_component", "~> 2.46"
+gem "image_processing", "~> 1.2"
 
-
-# gem "redis", "~> 4.0"
-# gem "kredis"
-# Use Sass to process CSS
-# gem "sassc-rails"
-# gem "image_processing", "~> 1.2"
-
-group :development, :test do
-  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
-  gem "debug", platforms: %i[ mri mingw x64_mingw ]
-end
 
 group :development do
-  #gem "web-console"
+  # gem "web-console"
   # gem "rack-mini-profiler"
   # gem "spring"
+  # gem 'rails_real_favicon'
+  gem 'mina', require: false
+  gem 'mina-whenever', require: false
+  gem 'rails-erd', require: false
 end
 
 group :test do
@@ -49,9 +43,15 @@ group :test do
 end
 
 group :development, :test do
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "rspec-rails"
   gem "apparition", "~> 0.6.0", github: "twalpole/apparition"
   gem "rails-controller-testing", "~> 1.0.5"
   gem "rspec-activemodel-mocks", "~> 1.1.0"
   gem "solidus_dev_support", "~> 2.5"
+end
+
+group :production do
+  gem "sd_notify"
+  gem "lograge"
 end

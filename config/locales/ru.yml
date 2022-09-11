@@ -7,6 +7,8 @@ ru:
     attributes:
       spree/price:
         city: Город
+      spree/product:
+        discontinue_on: Недоступен с
 
 
   spree:
@@ -14,6 +16,11 @@ ru:
       spree/shipping_method:
         available_to_all: Доступен для всех складов
     admin:
+      tab:
+        content: Контент
+        reviews: Отзывы
+        blog: Блог
+        smiles: Улыбки
       promotion_status:
         active: Активна
       variants:
@@ -30,6 +37,7 @@ ru:
           approve: Одобрить
           cancel: Отменить
           resume: Возобновить
+      
 
 
     

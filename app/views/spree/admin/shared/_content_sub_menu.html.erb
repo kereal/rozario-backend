@@ -1,0 +1,14 @@
+<ul class="admin-subnav" data-hook="admin_settings_sub_tabs">
+  <% if can?(:admin, Spree::Store) %>
+    <%= tab :reviews, url: 'reviews' %>
+  <% end %>
+
+  <% if can?(:admin, Spree::Store) %>
+    <%= tab :blog, url: 'blog' %>
+  <% end %>
+  
+  <% if can?(:admin, Spree::Store) %>
+    <%= tab :smiles, url: 'smiles' %>
+  <% end %>
+
+</ul>

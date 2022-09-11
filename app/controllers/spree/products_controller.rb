@@ -25,6 +25,7 @@ module Spree
       @taxon = Spree::Taxon.find(params[:taxon_id]) if params[:taxon_id]
     end
 
+    
     private
 
     def accurate_title

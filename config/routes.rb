@@ -63,7 +63,13 @@ Spree::Core::Engine.routes.draw do
 
   get '/unauthorized', to: 'home#unauthorized', as: :unauthorized
   get '/cart_link', to: 'store#cart_link', as: :cart_link
+  
+  get 'rozmain', to: 'rozmain#index'
+  get 'rozmain/catalog/*permalink', to: 'rozmain#category'
+  get 'rozmain/product/:id', to: 'rozmain#product'
+
 end
+
 Rails.application.routes.draw do
   # This line mounts Solidus's routes at the root of your application.
   # This means, any requests to URLs such as /products, will go to Spree::ProductsController.
@@ -71,9 +77,6 @@ Rails.application.routes.draw do
   #
   # We ask that you don't use the :as option here, as Solidus relies on it being the default of "spree"
   mount Spree::Core::Engine, at: '/'
-
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
   # Defines the root path route ("/")
   # root "articles#index"
 end
