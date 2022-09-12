@@ -15,18 +15,6 @@ module Rozario
     config.time_zone = "Europe/Moscow"
     config.i18n.available_locales = [:ru]
     config.i18n.default_locale = :ru
-
-    config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.smtp_settings = {
-      tls: true,
-      address: 'smtp.yandex.ru',
-      port: 465,
-      domain: 'kereal.ru',
-      authentication: 'plain',
-      user_name: 'bender@kereal.ru',
-      password: 'Ilovebender'
-    }
     
     # config.eager_load_paths << Rails.root.join("extras")
   end
