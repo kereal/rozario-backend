@@ -4,13 +4,14 @@ class Spree::RozmainController < Spree::StoreController
   
   def index
     
-    products = Spree::Product.joins(:taxons).where(taxons:{id: 16}).preload(master: :prices).map { |p| {
+    products = Spree::Product.available.preload(master: :prices).order(created_at: :desc).limit(6).map { |p| {
       id: p.id,
       title: p.name,
       description: p.description,
-      price: p.master.price,
+      price: p.master.price.to_i,
       image: p.master.images.first.url,
-      hitItem: true,
+      #hitItem: true,
+      newItem: true,
       size: {
         name: 'средний', width: { num: '22', measureUnit: 'см' }, height: { num: '12', measureUnit: 'см' },
       },
@@ -20,7 +21,7 @@ class Spree::RozmainController < Spree::StoreController
       id: t.id,
       name: t.name,
       permalink: "/catalog/#{t.permalink}",
-      image: t.icon(:large)
+      image: t.icon.exists? ? t.icon(:large) : nil
     }}
     
     render json: {
@@ -84,6 +85,13 @@ class Spree::RozmainController < Spree::StoreController
       product: product,
       variants: variants,
       properties: props
+    }
+  end
+  
+  
+  def reviews
+    render json: {
+      reviews: Review.published
     }
   end
   

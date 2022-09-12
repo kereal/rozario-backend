@@ -9,6 +9,12 @@ ru:
         city: Город
       spree/product:
         discontinue_on: Недоступен с
+    errors:
+      models:
+        spree/image:
+          attributes:
+            attachment:
+              content_type_not_supported: не поддерживается
 
 
   spree:
@@ -37,10 +43,8 @@ ru:
           approve: Одобрить
           cancel: Отменить
           resume: Возобновить
-      
 
-
-    
+ 
     payment_states:
       checkout: Оформлен
       completed: Завершена
@@ -52,9 +56,6 @@ ru:
     download_promotion_codes_list: Скачать список промо-кодов
     discount_rules: Правила применения скидки
     adjustment_type: Тип корректировки
-    
-    
-    
     info_number_of_skus_not_shown:
       many: и %{count} других
       one: и еще один
