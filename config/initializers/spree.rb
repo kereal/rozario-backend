@@ -53,18 +53,11 @@ end
 Spree::Backend::Config.configure do |config|
   config.locale = 'ru'
 
-  #config.menu_items << config.class::MenuItem.new(
-  #  "Контент",
-  #  'icon-name',
-  #  url: '/admin/reviews'
-  #)
-  
   config.menu_items << config.class::MenuItem.new(
-    :content,
-    'edit',
+    :content, 'edit',
     label: :content,
     partial: 'spree/admin/shared/content_sub_menu',
-    url: :admin_stores_path,
+    url: :admin_reviews_path,
     position: 5
   )
   

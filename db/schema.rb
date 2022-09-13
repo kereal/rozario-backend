@@ -71,19 +71,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_224728) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "reviews", force: :cascade do |t|
-    t.integer "order_id", null: false
-    t.string "text"
-    t.string "reply"
-    t.float "freshness"
-    t.float "delivery"
-    t.float "service"
-    t.string "compliment"
-    t.boolean "published", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "spree_addresses", force: :cascade do |t|
     t.string "firstname"
     t.string "lastname"
@@ -742,6 +729,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_11_224728) do
     t.boolean "mutable", default: true
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "spree_reviews", force: :cascade do |t|
+    t.integer "order_id", null: false
+    t.string "text"
+    t.string "reply"
+    t.string "compliment"
+    t.boolean "published", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "rating"
   end
 
   create_table "spree_roles", force: :cascade do |t|

@@ -1,0 +1,26 @@
+<div class="row js-reviews-form">
+  <div class="col-12">
+
+    <div data-hook="admin_review_form_fields">
+      <fieldset class="no-border-top">
+
+        <%= review_form.field_container :text do %>
+          <%= review_form.label :text %><br />
+          <%= review_form.text_field :text, class: 'fullwidth' %>
+        <% end %>
+
+        <%= review_form.field_container :reply do %>
+          <%= review_form.label :reply %><br />
+          <%= review_form.text_area :reply, class: 'fullwidth' %>
+        <% end %>
+        
+        <%= review_form.field_container :published do %>
+          <%= review_form.label :published %><br />
+          <%= review_form.check_box :published, { checked: @review.published }, 'true', 'false' %>
+        <% end %>
+
+      </fieldset>
+    </div>
+  </div>
+
+</div>

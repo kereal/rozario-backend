@@ -4,11 +4,29 @@ ru:
     models:
       spree/taxon:
         other: Таксоны
+      spree/review:
+        one: Отзыв
+        few: Отзыва
+        other: Отзывы
     attributes:
       spree/price:
         city: Город
       spree/product:
         discontinue_on: Недоступен с
+      spree/review:
+        order_number: Номер заказа
+        user_email: Эл.почта
+        rating: Оценки
+        text: Текст
+        reply: Ответ
+        rating: Оценка
+        freshness: Свежесть
+        delivery: Доставка
+        service: Обслуживание
+        compliment: Комплимент
+        published: Опубликован
+        created_at: Создан
+        updated_at: Обновлен
     errors:
       models:
         spree/image:
@@ -21,6 +39,9 @@ ru:
     hints:
       spree/shipping_method:
         available_to_all: Доступен для всех складов
+    eligibility_errors:
+      messages:
+        not_first_order: Купон действует только на первый заказ
     admin:
       tab:
         content: Контент
@@ -61,3 +82,7 @@ ru:
       one: и еще один
       few: ""
       other: и %{count} других
+    content: Контент
+    review: Отзыв
+    
+  new_review: Новый отзыв

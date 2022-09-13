@@ -1,0 +1,82 @@
+<% admin_breadcrumb(t('spree.content')) %>
+<% admin_breadcrumb(plural_resource_name(Spree::Review)) %>
+
+<% content_for :page_actions do %>
+  <% if can?(:create, Spree::Review) %>
+    <li>
+      <%= link_to t('new_review'), new_object_url, id: 'admin_new_review_link', class: 'btn btn-primary' %>
+    </li>
+  <% end %>
+<% end %>
+
+<%= paginate @reviews, theme: "solidus_admin" %>
+
+<% if @reviews.any? %>
+  <table class="index" id='listing_reviews' data-hook>
+    <colgroup>
+      <col style="width: 13%" />
+      <col style="width: 10%" />
+      <col style="width: 10%" />
+      <col style="width: 40%" />
+      <col style="width: 11%" />
+      <col style="width: 8%" />
+      <col style="width: 8%" />
+    </colgroup>
+    <thead>
+      <tr data-hook="reviews_header">
+        <th><%= sort_link @search, :order_number, Spree::Review.human_attribute_name(:order_number), title: 'reviews_order_by_order_number' %></th>
+        <th><%= Spree::Review.human_attribute_name(:user_email) %></th>
+        <th><%= Spree::Review.human_attribute_name(:rating) %></th>
+        <th><%= Spree::Review.human_attribute_name(:text) %></th>
+        <th><%= sort_link @search, :created_at, Spree::Review.human_attribute_name(:created_at), title: 'reviews_order_by_created_at' %></th>
+        <th></th>
+        <th class="actions"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reviews.each do |review| %>
+        <tr id="<%= spree_dom_id review %>" data-hook="reviews_row">
+          <td><%= link_to review.order.number, edit_admin_order_path(review.order.number) %></td>
+          <td><%= review.user.email %></td>
+          <td>
+            <% review.rating.each_with_index do |r, i| %>
+              <span title="<%= Spree::Review.human_attribute_name(r[0]) %>" style="cursor:help"><%= r[1] %></span>
+              <% if review.rating.count > i + 1 %>/<% end %>
+            <% end %>
+          </td>
+          <td><%= review.text %></td>
+          <td><%= review.created_at.to_s(:short) %></td>
+          <td style="font-size:1.35rem;text-align:center;">
+            <% unless review.reply.blank? %>
+              <i title="Есть ответ" class="fa fa-check-circle" style="color:var(--green)"></i>
+            <% else %>
+              <i title="Нет ответа" class="fa fa-minus-circle" style="color:var(--red)"></i>
+            <% end %>
+            <% if review.published %>
+              <i title="Опубликован" class="fa fa-eye" style="color:var(--green)"></i>
+            <% else %>
+              <i title="Не опубликован" class="fa fa-eye-slash" style="color:var(--red)"></i>
+            <% end %>
+          </td>
+          
+          <td class="actions">
+            <% if can?(:update, review) %>
+              <%= link_to_edit review, no_text: true %>
+            <% end %>
+            <% if can?(:destroy, review) %>
+              <%= link_to_delete review, no_text: true %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="no-objects-found">
+    <%= render 'spree/admin/shared/no_objects_found',
+                 resource: Spree::Review,
+                 new_resource_url: new_object_url %>
+  </div>
+<% end %>
+
+<%= paginate @reviews, theme: "solidus_admin" %>

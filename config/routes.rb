@@ -73,6 +73,10 @@ Spree::Core::Engine.routes.draw do
     # resources :reviews, only: [:index, :create]
   end
   
+  namespace :admin do
+    resources :reviews
+  end
+  
 end
 
 Rails.application.routes.draw do

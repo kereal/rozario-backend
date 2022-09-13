@@ -506,8 +506,6 @@ GEM
     solidus_i18n (2.1.1)
       solidus_core (>= 1.1, < 4)
       solidus_support (~> 0.4)
-    solidus_sample (3.2.2)
-      solidus_core (= 3.2.2)
     solidus_support (0.9.1)
     sprockets (4.1.1)
       concurrent-ruby (~> 1.0)
@@ -586,7 +584,6 @@ DEPENDENCIES
   solidus_core (~> 3.2)
   solidus_dev_support (~> 2.5)
   solidus_i18n (~> 2.0)
-  solidus_sample (~> 3.2)
   solidus_support
   sprockets-rails
   sqlite3 (~> 1.4)

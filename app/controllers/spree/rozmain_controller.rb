@@ -24,10 +24,13 @@ class Spree::RozmainController < Spree::StoreController
       image: t.icon.exists? ? t.icon(:large) : nil
     }}
     
+    reviews = Spree::Review.preload(:order).published
+    
     render json: {
       taxons: taxons,
-      products: products
-    }
+      products: products,
+      reviews: reviews
+    }, include: { order: { only: :number }}
     
   end
   
@@ -90,9 +93,12 @@ class Spree::RozmainController < Spree::StoreController
   
   
   def reviews
-    render json: {
-      reviews: Review.published
-    }
+    #reviews = Review.preload(:order).published
+    #render json: {
+    #  reviews: reviews
+    #}, include: {
+    #  order: { only: :number }
+    #}
   end
   
   
