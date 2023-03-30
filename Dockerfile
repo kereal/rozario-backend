@@ -8,7 +8,6 @@
 FROM ruby:3.2-alpine
 
 RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev
-ENV BUNDLE_WITHOUT=development BUNDLE_JOBS=4
 
 WORKDIR /app
 
