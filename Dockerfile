@@ -8,7 +8,7 @@
 FROM ruby:3.2-alpine
 
 RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev \
-  && adduser --create-home --no-log-init --uid 1000 --user-group --system app
+  && adduser -S -u 1000 -G 1000 app
 
 USER app
 
