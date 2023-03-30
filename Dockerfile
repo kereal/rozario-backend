@@ -9,13 +9,13 @@ FROM ruby:3.2-alpine
 
 WORKDIR /app
 
-RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev \
-  && addgroup -S appgroup && adduser -S -G appgroup -u 1000 appuser \
-  && chown -R appuser:appgroup /app
+RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev
+  # && addgroup -S appgroup && adduser -S -G appgroup -u 1000 appuser
 
-USER appuser
+#USER appuser
 
 COPY Gemfile* ./
 RUN bundle install
 
+#COPY --chown=appuser:appgroup . .
 COPY . .
