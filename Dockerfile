@@ -15,8 +15,6 @@ WORKDIR /app
 COPY Gemfile* ./
 RUN bundle install
 
-COPY ./.ssh /root/.ssh/
-
 COPY . .
 
 CMD rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3003
