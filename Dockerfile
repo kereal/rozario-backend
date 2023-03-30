@@ -11,7 +11,7 @@ WORKDIR /app
 
 RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev \
   && addgroup -S appgroup && adduser -S -G appgroup appuser \
-  && chown appuser:appgroup -R /app
+  && chown -R appuser:appgroup /app
 
 USER appuser
 
