@@ -7,13 +7,13 @@
 
 FROM ruby:3.2-alpine
 
+WORKDIR /app
+
 RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev \
   && addgroup -S appgroup && adduser -S -G appgroup appuser \
   && chown appuser:appgroup -R /app
 
 USER appuser
-
-WORKDIR /app
 
 COPY Gemfile* ./
 RUN bundle install
