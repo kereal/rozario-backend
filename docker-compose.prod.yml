@@ -2,8 +2,7 @@ services:
 
   app:
     env_file: .env
-    build:
-      context: .
+    image: "ghcr.io/kereal/rozario-backend-master"
     volumes:
       - ./shared/log:/app/log
       - ./shared/storage:/app/storage
@@ -14,4 +13,4 @@ services:
     command: sh -c "
       cp -r /public /app &&
       bundle exec rails db:migrate &&
-      bundle exec rails s -b 0.0.0.0 -p 3000"
+      bundle exec rails s -p 3000"

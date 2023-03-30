@@ -17,9 +17,9 @@
 !/tmp/storage/.keep
 
 /public/assets
+/shared/
 
-# Ignore master key for decrypting credentials and more.
 /config/master.key
 
-erd.png
-/.ssh/
+.env*
+!.env.example

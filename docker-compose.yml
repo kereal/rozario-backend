@@ -2,10 +2,12 @@ services:
 
   app:
     env_file: .env
+    container_name: rozario-backend-${RAILS_ENV}
+    image: rozario-backend-${RAILS_ENV}
     build:
       context: .
     ports:
       - "3000:3000"
     command: sh -c "
       bundle exec rails db:migrate &&
-      bundle exec rails s -b 0.0.0.0 -p 3000"
+      bundle exec rails s -p 3000"

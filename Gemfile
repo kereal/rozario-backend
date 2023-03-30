@@ -31,7 +31,6 @@ group :development do
   # gem 'rails_real_favicon'
   gem 'mina', require: false
   gem 'mina-whenever', require: false
-  gem 'rails-erd', require: false
 end
 
 group :test do
