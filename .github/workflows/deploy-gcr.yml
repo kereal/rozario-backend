@@ -45,8 +45,8 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             ${{ github.actor }} задеплоил новую версию ${{ github.repository }}
-            Сообщение: ${{ github.event.commits[0].message }}
-            https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            ${{ github.event.commits[0].message }}
+#            https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
       # - name: Deploy to VPS
       #   uses: appleboy/ssh-action@master

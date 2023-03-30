@@ -1,0 +1,17 @@
+services:
+
+  app:
+    env_file: .env
+    build:
+      context: .
+    volumes:
+      - ./shared/log:/app/log
+      - ./shared/storage:/app/storage
+      - ./shared/public:/app/public
+      - ./shared/db/production.sqlite3:/app/db/production.sqlite3
+    ports:
+      - "3000:3000"
+    command: sh -c "
+      cp -r /public /app &&
+      bundle exec rails db:migrate &&
+      bundle exec rails s -b 0.0.0.0 -p 3000"
