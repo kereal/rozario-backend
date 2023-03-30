@@ -8,9 +8,10 @@
 FROM ruby:3.2-alpine
 
 RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev \
-  && adduser -S -u 1000 app
+  && addgroup -S appgroup && adduser -S -G appgroup appuser \
+  && chown appuser:appgroup -R /app
 
-USER app
+USER appuser
 
 WORKDIR /app
 
