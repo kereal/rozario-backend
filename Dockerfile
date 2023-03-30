@@ -7,7 +7,8 @@
 
 FROM ruby:3.2-alpine
 
-RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev
+RUN apk update && apk add --no-cache build-base tzdata imagemagick vips git openssh nodejs libpq-dev \
+  && useradd --create-home --no-log-init --uid 1000 --user-group --system app
 
 WORKDIR /app
 
@@ -15,5 +16,3 @@ COPY Gemfile* ./
 RUN bundle install
 
 COPY . .
-
-CMD rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0 -p 3003
