@@ -8,7 +8,7 @@ Spree.config do |config|
   config.currency = "RUB"
 
   # from address for transactional emails
-  config.mails_from = "store@example.com"
+  config.mails_from = "bender@kereal.ru"
 
   # Uncomment to stop tracking inventory levels in the application
   config.track_inventory_levels = false

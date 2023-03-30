@@ -3,9 +3,9 @@
 
 <% content_for :page_actions do %>
   <% if can?(:create, Spree::Review) %>
-    <li>
+    <!--<li>
       <%= link_to t('new_review'), new_object_url, id: 'admin_new_review_link', class: 'btn btn-primary' %>
-    </li>
+    </li>-->
   <% end %>
 <% end %>
 
@@ -24,11 +24,11 @@
     </colgroup>
     <thead>
       <tr data-hook="reviews_header">
-        <th><%= sort_link @search, :order_number, Spree::Review.human_attribute_name(:order_number), title: 'reviews_order_by_order_number' %></th>
+        <th><%= sort_link @search, :order_number, Spree::Review.human_attribute_name(:order_number) %></th>
         <th><%= Spree::Review.human_attribute_name(:user_email) %></th>
         <th><%= Spree::Review.human_attribute_name(:rating) %></th>
         <th><%= Spree::Review.human_attribute_name(:text) %></th>
-        <th><%= sort_link @search, :created_at, Spree::Review.human_attribute_name(:created_at), title: 'reviews_order_by_created_at' %></th>
+        <th><%= sort_link @search, :created_at, Spree::Review.human_attribute_name(:created_at) %></th>
         <th></th>
         <th class="actions"></th>
       </tr>
@@ -37,15 +37,15 @@
       <% @reviews.each do |review| %>
         <tr id="<%= spree_dom_id review %>" data-hook="reviews_row">
           <td><%= link_to review.order.number, edit_admin_order_path(review.order.number) %></td>
-          <td><%= review.user.email %></td>
+          <td><% if review.user %><%= review.user.email %><% end %></td>
           <td>
             <% review.rating.each_with_index do |r, i| %>
               <span title="<%= Spree::Review.human_attribute_name(r[0]) %>" style="cursor:help"><%= r[1] %></span>
               <% if review.rating.count > i + 1 %>/<% end %>
-            <% end %>
+            <% end if review.rating %>
           </td>
           <td><%= review.text %></td>
-          <td><%= review.created_at.to_s(:short) %></td>
+          <td><%= review.created_at.to_fs(:short) %></td>
           <td style="font-size:1.35rem;text-align:center;">
             <% unless review.reply.blank? %>
               <i title="Есть ответ" class="fa fa-check-circle" style="color:var(--green)"></i>
