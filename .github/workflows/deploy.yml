@@ -47,7 +47,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSHKEY }}
           script: |
             docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-            (docker stop ${{ github.repository }}-${{ github.ref_name }} && docker rm $_) || true
+            (docker stop ${{ github.event.repository.name }}-${{ github.ref_name }} && docker rm $_) || true
             docker run -dp 3006:3006 --name ${{ github.event.repository.name }}-${{ github.ref_name }} ${{ env.image_name }}
 
       - name: Send telegram message
