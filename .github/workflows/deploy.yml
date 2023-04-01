@@ -47,14 +47,13 @@ jobs:
             развернута новая версия ${{ github.repository }}
             ${{ github.event.commits[0].message }} (${{ github.actor }})
 
-      # - name: Deploy to VPS
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.DEPLOY_HOST }}
-      #     username: ${{ secrets.DEPLOY_USER }}
-      #     key: ${{ secrets.DEPLOY_SSHKEY }}
-      #     script: |
-      #       docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-      #       docker compose down
-      #       docker compose up -d --pull always
-      #       docker system prune -f
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSHKEY }}
+          script: |
+            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+            docker compose down
+            docker compose up -d --pull always
