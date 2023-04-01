@@ -44,8 +44,8 @@ jobs:
           to: ${{ secrets.TELEGRAM_TO }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
-            ${{ github.actor }} задеплоил новую версию ${{ github.repository }}
-            ${{ github.event.commits[0].message }}
+            развернута новая версия ${{ github.repository }}
+            ${{ github.event.commits[0].message }} (${{ github.actor }})
 #            https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
       # - name: Deploy to VPS
@@ -56,7 +56,6 @@ jobs:
       #     key: ${{ secrets.DEPLOY_SSHKEY }}
       #     script: |
       #       docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-      #       docker compose pull
-      #       docker stop ${{ github.repository }}-${{ github.ref_name }} || true
+      #       docker compose down
+      #       docker compose up -d --pull always
       #       docker system prune -f
-      #       docker run -dp 3005:3005 --name ${{ github.event.repository.name }}-${{ github.ref_name }} ${{ env.image_name }}

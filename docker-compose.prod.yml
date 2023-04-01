@@ -1,16 +1,22 @@
 services:
 
-  app:
+  backend:
     env_file: .env
-    image: "ghcr.io/kereal/rozario-backend-master"
+    image: ghcr.io/kereal/rozario-backend-master
+    container_name: rozario-backend-master
     volumes:
       - ./shared/log:/app/log
-      - ./shared/storage:/app/storage
       - ./shared/public:/app/public
+      - ./shared/storage:/app/storage
       - ./shared/db/production.sqlite3:/app/db/production.sqlite3
     ports:
-      - "3000:3000"
+      - 127.0.0.1:3003:3000
     command: sh -c "
       cp -r /public /app &&
       bundle exec rails db:migrate &&
       bundle exec rails s -p 3000"
+
+networks:
+  default:
+    name: rozario
+    external: true

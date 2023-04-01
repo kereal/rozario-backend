@@ -93,7 +93,7 @@ Rails.application.configure do
   
   config.lograge.enabled = true
   
-  config.action_mailer.default_url_options = { host: 'rozshop.kereal.ru' }
+  config.action_mailer.default_url_options = { host: 'new.rozarioflowers.ru' }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     tls: true,
@@ -104,5 +104,7 @@ Rails.application.configure do
     user_name: 'bender@kereal.ru',
     password: 'Ilovebender'
   }
+
+  config.default_url_options = { host: 'new.rozarioflowers.ru' }
 
 end
