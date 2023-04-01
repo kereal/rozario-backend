@@ -47,6 +47,7 @@ jobs:
           key: ${{ secrets.DEPLOY_SSHKEY }}
           script: |
             docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+            cd ~/app/backend
             docker compose down
             docker compose up -d --pull always
 
