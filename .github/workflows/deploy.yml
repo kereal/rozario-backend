@@ -23,7 +23,7 @@ jobs:
 
       - name: Set vars
         run: |
-          echo "date=$(date +%d-%m-%Y.%H%M%S)" >> $GITHUB_ENV
+#          echo "date=$(date +%d-%m-%Y.%H%M%S)" >> $GITHUB_ENV
           echo "image_name=ghcr.io/${{ github.repository }}-${{ github.ref_name }}" >> $GITHUB_ENV
 
       - name: Build and push
@@ -36,7 +36,7 @@ jobs:
           cache-to: type=gha,mode=max
           tags: |
             ${{ env.image_name }}:latest
-            ${{ env.image_name }}:${{ env.date }}
+#            ${{ env.image_name }}:${{ env.date }}
 
       - name: Send telegram message
         uses: appleboy/telegram-action@master
@@ -46,16 +46,15 @@ jobs:
           message: |
             развернута новая версия ${{ github.repository }}
             ${{ github.event.commits[0].message }} (${{ github.actor }})
-#            https://github.com/${{ github.repository }}/commit/${{github.sha}}
 
-      # - name: Deploy to VPS
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.DEPLOY_HOST }}
-      #     username: ${{ secrets.DEPLOY_USER }}
-      #     key: ${{ secrets.DEPLOY_SSHKEY }}
-      #     script: |
-      #       docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
-      #       docker compose down
-      #       docker compose up -d --pull always
-      #       docker system prune -f
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          port: ${{ secrets.DEPLOY_PORT }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSHKEY }}
+          script: |
+            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.GITHUB_TOKEN }}
+            docker compose down
+            docker compose up -d --pull always

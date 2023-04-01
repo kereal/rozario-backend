@@ -80,5 +80,5 @@ Rails.application.configure do
     user_name: 'bender@kereal.ru',
     password: 'Ilovebender'
   }
-  
+
 end

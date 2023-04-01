@@ -105,6 +105,4 @@ Rails.application.configure do
     password: 'Ilovebender'
   }
 
-  config.default_url_options = { host: 'new.rozarioflowers.ru' }
-
 end
