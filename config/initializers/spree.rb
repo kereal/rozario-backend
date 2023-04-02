@@ -7,9 +7,6 @@ Spree.load_defaults '3.2.0'
 Spree.config do |config|
   config.currency = "RUB"
 
-  # from address for transactional emails
-  config.mails_from = "bender@kereal.ru"
-
   # Uncomment to stop tracking inventory levels in the application
   config.track_inventory_levels = false
 

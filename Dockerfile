@@ -8,7 +8,9 @@ RUN apk update && apk add --no-cache build-base tzdata git nodejs libpq-dev \
 USER appuser
 
 COPY --chown=appuser:appgroup Gemfile* ./
-RUN bundle install
+
+RUN bundle install && rm -rf /usr/local/bundle/cache/*
+
 COPY --chown=appuser:appgroup . .
 RUN if [ "${RAILS_ENV}" != "development" ]; then SECRET_KEY_BASE=blabla rails assets:precompile; fi
 
