@@ -5,13 +5,12 @@ services:
     image: ghcr.io/kereal/rozario-backend-master
     container_name: rozario-backend-master
     volumes:
-      - ./shared/log:/app/log
-      - ./shared/public:/app/public
-      - ./shared/storage:/app/storage
-      - ./shared/db/production.sqlite3:/app/db/production.sqlite3
+      - ./log:/app/log
+      - ./public:/app/public
+      - ./storage:/app/storage
+      - ./db/production.sqlite3:/app/db/production.sqlite3
     ports:
-      - 127.0.0.1:3003:3000
-    restart: always
+      - 127.0.0.1:3000:3000
     command: sh -c "
       cp -r /public /app &&
       bundle exec rails db:migrate &&
