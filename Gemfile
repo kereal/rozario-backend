@@ -29,8 +29,6 @@ group :development do
   # gem "rack-mini-profiler"
   # gem "spring"
   # gem 'rails_real_favicon'
-  gem 'mina', require: false
-  gem 'mina-whenever', require: false
 end
 
 group :test do
