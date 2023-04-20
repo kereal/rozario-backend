@@ -13,4 +13,4 @@ tmp/*
 !.env.example
 config/master.key
 
-/data
+/shared

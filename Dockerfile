@@ -1,8 +1,8 @@
 FROM ruby:3.2.1-alpine AS build
 
 WORKDIR /app
-RUN apk update && apk add --no-cache build-base tzdata git nodejs libpq-dev \
-  && addgroup --g 1000 appgroup && adduser -S -G appgroup -u 1000 appuser \
+RUN apk add --no-cache build-base tzdata git nodejs libpq-dev \
+  && addgroup --g 1003 appgroup && adduser -S -G appgroup -u 1002 appuser \
   && chown appuser:appgroup -R /app
 
 USER appuser
@@ -21,8 +21,8 @@ FROM ruby:3.2.1-alpine
 
 WORKDIR /app
 
-RUN apk update && apk add --no-cache tzdata imagemagick vips nodejs \
-  && addgroup --g 1000 appgroup && adduser -S -G appgroup -u 1000 appuser \
+RUN apk add --no-cache tzdata libpq-dev imagemagick vips nodejs \
+  && addgroup --g 1003 appgroup && adduser -S -G appgroup -u 1002 appuser \
   && chown appuser:appgroup -R /app
 
 COPY --chown=appuser:appgroup --from=build /usr/local/bundle /usr/local/bundle

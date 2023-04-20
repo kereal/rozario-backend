@@ -1,13 +1,37 @@
+name: rozario
 services:
 
   app:
     env_file: .env
-    container_name: rozario-backend-${RAILS_ENV}
-    image: rozario-backend-${RAILS_ENV}
+    container_name: rozario-app
+    image: rozario-app
+    depends_on: [db]
+    networks: [default]
     build:
       context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
     ports:
-      - "127.0.0.1:3000:3000"
+      - 3005:3000
     command: sh -c "
       bundle exec rails db:migrate &&
-      bundle exec rails s -p 3000"
+      bundle exec rails s -p 3000 -b 0.0.0.0"
+
+  db:
+    image: postgres:alpine
+    container_name: rozario-db
+    networks: [default]
+    environment:
+      POSTGRES_USER: rozario
+      POSTGRES_PASSWORD: rozpass
+    volumes:
+      - ./shared/db/postgres:/var/lib/postgresql/data/
+    ports:
+      - 5432:5432
+
+
+networks:
+  default:
+    name: rozario
+    driver: bridge

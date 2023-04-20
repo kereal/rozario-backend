@@ -1,9 +1,13 @@
+name: rozario
 services:
 
   backend:
     env_file: .env
     image: ghcr.io/kereal/rozario-backend-master
     container_name: rozario-backend-master
+    depends_on: [db]
+    networks: [default]
+    restart: always
     volumes:
       - ./log:/app/log
       - ./public:/app/public
@@ -15,6 +19,17 @@ services:
       cp -r /public /app &&
       bundle exec rails db:migrate &&
       bundle exec rails s -p 3000"
+
+  db:
+    image: postgres:alpine
+    container_name: rozario-db
+    networks: [default]
+    environment:
+      POSTGRES_USER: rozario
+      POSTGRES_PASSWORD: rozpass
+    volumes:
+      - ./shared/db/postgres:/var/lib/postgresql/data/
+
 
 networks:
   default:
