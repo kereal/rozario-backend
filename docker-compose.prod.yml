@@ -1,7 +1,7 @@
 name: rozario
 services:
 
-  backend:
+  app:
     env_file: .env
     image: ghcr.io/kereal/rozario-backend-master
     container_name: rozario-backend-master

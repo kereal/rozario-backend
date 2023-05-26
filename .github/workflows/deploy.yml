@@ -1,4 +1,4 @@
-name: Deploy backend (ghcr.io)
+name: Deploy backend
 
 on:
   push:

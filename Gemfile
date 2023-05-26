@@ -23,6 +23,7 @@ gem "canonical-rails"
 gem "truncate_html"
 gem "view_component", "~> 2.46"
 gem "image_processing", "~> 1.2"
+gem "rack-cors", "~> 1.1"
 
 
 group :development do
