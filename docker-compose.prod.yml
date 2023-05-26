@@ -7,26 +7,28 @@ services:
     container_name: rozario-backend-master
     depends_on: [db]
     networks: [default]
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./log:/app/log
       - ./public:/app/public
       - ./storage:/app/storage
-      - ./db/production.sqlite3:/app/db/production.sqlite3
     ports:
       - 127.0.0.1:3000:3000
     command: sh -c "
       cp -r /public /app &&
       bundle exec rails db:migrate &&
+      rm -f tmp/pids/server.pid &&
       bundle exec rails s -p 3000"
 
   db:
     image: postgres:alpine
     container_name: rozario-db
     networks: [default]
+    restart: unless-stopped
     environment:
       POSTGRES_USER: rozario
       POSTGRES_PASSWORD: rozpass
+      POSTGRES_INITDB_ARGS: --locale=ru_RU.UTF8
     volumes:
       - ./shared/db/postgres:/var/lib/postgresql/data/
 

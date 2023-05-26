@@ -6,6 +6,10 @@ Spree.load_defaults '3.2.0'
 
 Spree.config do |config|
   config.currency = "RUB"
+  config.generate_api_key_for_all_roles = true
+
+  # config.product_image_styles = {}
+  # config.taxon_styles = {}
 
   # Uncomment to stop tracking inventory levels in the application
   config.track_inventory_levels = false
@@ -26,8 +30,6 @@ Spree.config do |config|
   # to a custom users role:
   # config.roles.assign_permissions :role_name, ['Spree::PermissionSets::CustomPermissionSet']
 
-  # Admin:
-
   # Custom logo for the admin
   # config.admin_interface_logo = "logo/solidus.svg"
 
@@ -45,6 +47,7 @@ Spree.config do |config|
   #   server: Rails.env.production? ? 'production' : 'test',
   #   test_mode: !Rails.env.production?
   # )
+
 end
 
 Spree::Backend::Config.configure do |config|
@@ -68,7 +71,13 @@ Spree::Api::Config.configure do |config|
   config.requires_authentication = true
 end
 
-Spree.user_class = "Spree::LegacyUser"
+Spree::Auth::Config[:confirmable] = false
+
+Devise.setup do |config|
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
+end
+
+# Spree.user_class = "Spree::LegacyUser"
 
 # Rules for avoiding to store the current path into session for redirects
 # When at least one rule is matched, the request path will not be stored

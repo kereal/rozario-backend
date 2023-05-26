@@ -27,6 +27,8 @@ ru:
         published: Опубликован
         created_at: Создан
         updated_at: Обновлен
+      spree/user:
+        phone: Номер телефона
     errors:
       models:
         spree/image:
@@ -36,6 +38,9 @@ ru:
 
 
   spree:
+    api:
+      invalid_api_key: Неверный ключ
+      must_specify_api_key: Нужно указать ключ
     hints:
       spree/shipping_method:
         available_to_all: Доступен для всех складов
@@ -65,7 +70,6 @@ ru:
           cancel: Отменить
           resume: Возобновить
 
- 
     payment_states:
       checkout: Оформлен
       completed: Завершена
