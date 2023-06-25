@@ -3,8 +3,8 @@ services:
 
   app:
     env_file: .env
-    container_name: roz-app
-    image: roz-app
+    container_name: rozapp
+    image: rozapp
     depends_on: [db]
     networks: [default]
     restart: unless-stopped
@@ -19,12 +19,13 @@ services:
       - 3005:3000
     command: sh -c "
       bundle exec rails db:migrate &&
+      bundle exec whenever --update-crontab &&
       rm -f tmp/pids/server.pid &&
       bundle exec rails s -p 3000 -b 0.0.0.0"
 
   db:
     image: postgres:alpine
-    container_name: roz-db
+    container_name: rozdb
     networks: [default]
     restart: unless-stopped
     environment:

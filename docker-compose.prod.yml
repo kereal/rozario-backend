@@ -17,6 +17,7 @@ services:
     command: sh -c "
       cp -r /public /app &&
       bundle exec rails db:migrate &&
+      bundle exec whenever --update-crontab &&
       rm -f tmp/pids/server.pid &&
       bundle exec rails s -p 3000"
 

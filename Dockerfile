@@ -1,25 +1,21 @@
-FROM ruby:3.2.1-alpine AS build
+FROM ruby:3.2.2-alpine AS build
 
 ARG RAILS_ENV
 
 WORKDIR /app
-RUN apk add --no-cache build-base tzdata git nodejs libpq-dev \
-  && addgroup --g 1003 appgroup && adduser -S -G appgroup -u 1002 appuser \
-  && chown appuser:appgroup -R /app
+RUN apk add --no-cache build-base tzdata git nodejs libpq-dev
 
-USER appuser
-
-COPY --chown=appuser:appgroup Gemfile* ./
+COPY Gemfile* ./
 
 RUN if [ "${RAILS_ENV}" != "development" ]; then bundle config set without "development test"; fi
 RUN bundle install
 
-COPY --chown=appuser:appgroup . .
+COPY . .
 
 RUN if [ "${RAILS_ENV}" != "development" ]; then SECRET_KEY_BASE=blabla rails assets:precompile; fi
 
 
-FROM ruby:3.2.1-alpine
+FROM ruby:3.2.2-alpine
 
 WORKDIR /app
 

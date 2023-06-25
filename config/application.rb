@@ -10,7 +10,16 @@ module Rozario
     config.time_zone = "Europe/Moscow"
     config.i18n.available_locales = [:ru]
     config.i18n.default_locale = :ru
-    
-    # config.eager_load_paths << Rails.root.join("extras")
+
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      enable_starttls: true,
+      address: "mail.netangels.ru",
+      port: 587,
+      authentication: "plain",
+      user_name: "robot@rozariofl.ru",
+      password: Rails.application.credentials.mail.password
+    }
+
   end
 end

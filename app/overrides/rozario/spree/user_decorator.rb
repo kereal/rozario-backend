@@ -1,24 +1,45 @@
 module Rozario
   module Spree
     module UserDecorator
-
+      
       def self.prepended(base)
         base.class_eval do
-          validates :phone, uniqueness: true, allow_blank: true, format: { with: /\A\+[0-9]{11}\z/ }   # 2do: сделать крутую валидацию
-          after_commit -> { confirm_by(:phone) }, if: :saved_change_to_phone?, on: [:create, :update]
-          after_commit -> { confirm_by(:email) }, if: :saved_change_to_email?, on: [:create, :update]
+          def self.confirmation_token_lifetime
+            1.hour
+          end
+          validates :phone, uniqueness: true, allow_blank: true, format: { with: /\A\+[0-9]{11}\z/ }
+          after_commit -> { request_auth_by(:phone) }, if: :saved_change_to_phone?, on: [:create, :update]
+          after_commit -> { request_auth_by(:email) }, if: :saved_change_to_email?, on: [:create, :update]
         end
       end
 
-      def confirm_by(method)
-        if last_request_at.present? and last_request_at > Time.now - 1.minute
-          errors.add(:confirmation_token, message: "Минимальный интервал между запросами — 1 минута")
+      def request_auth_by(method)
+        interval = 1.minute
+        if last_request_at.present? and last_request_at > Time.now - interval
+          errors.add(:confirmation_token, message: "Минимальный интервал между запросами — #{interval.in_seconds} с")
           return
         end
 
-        # 2do: сделать авточистку
         update(last_request_at: Time.now, confirmation_token: generate_code, perishable_token: SecureRandom.hex(24))
-        puts " >> sending code by #{method}: #{confirmation_token}"
+
+        if method == :phone
+          unless Rails.env == "development"
+            SendSmsJob.perform_later phone, "Код для входа: #{confirmation_token}"
+          end
+        end
+
+        if method == :email
+          unless Rails.env == "development"
+            ::Spree::UserMailer.with(user: self).request_auth.deliver_later
+          end
+        end
+
+        puts ">> send code by #{method}: #{confirmation_token}" if Rails.env == "development"
+      end
+
+      def authenticate_by_code
+        return false if last_request_at && last_request_at < Time.now - self.class.confirmation_token_lifetime
+        update(confirmed_at: Time.now, confirmation_token: nil, perishable_token: nil)
       end
 
       protected
@@ -37,7 +58,8 @@ module Rozario
         end while self.class.exists?(confirmation_token: code)
         code
       end
-      
+
+     
       ::Spree::User.prepend(self) if ::Spree::User.included_modules.exclude?(self)
     
     end

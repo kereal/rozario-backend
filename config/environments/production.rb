@@ -53,7 +53,7 @@ Rails.application.configure do
   config.log_level = :info
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :remote_ip ]
+  # config.log_tags = [ :remote_ip ]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
@@ -66,7 +66,7 @@ Rails.application.configure do
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
-  # config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -94,15 +94,5 @@ Rails.application.configure do
   config.lograge.enabled = true
   
   config.action_mailer.default_url_options = { host: 'new.rozarioflowers.ru' }
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    tls: true,
-    address: 'smtp.yandex.ru',
-    port: 465,
-    domain: 'kereal.ru',
-    authentication: 'plain',
-    user_name: 'bender@kereal.ru',
-    password: 'Ilovebender'
-  }
 
 end
