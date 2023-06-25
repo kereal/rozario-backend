@@ -1,4 +1,4 @@
-class Spree::RozmainController < Spree::StoreController
+class Spree::Api::RozmainController < Spree::StoreController
   before_action :set_headers
 
   

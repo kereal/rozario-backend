@@ -63,24 +63,27 @@ Spree::Core::Engine.routes.draw do
 
   get '/unauthorized', to: 'home#unauthorized', as: :unauthorized
   get '/cart_link', to: 'store#cart_link', as: :cart_link
-  
-  # rozario API
-  scope :rozmain do
-    get '', to: 'rozmain#index'
-    get 'catalog/*permalink', to: 'rozmain#category'
-    get 'product/:id', to: 'rozmain#product'
-    get 'reviews', to: 'rozmain#reviews'
-    # resources :reviews, only: [:index, :create]
-  end
 
+  
   namespace :api, format: false, defaults: { format: :json } do
-    #scope :users do
+  
     resources :users, only: [] do
       post :request_auth, on: :collection
       post :auth, on: :collection
     end
+  
+    # rozario API
+    scope :rozmain do
+      get '', to: 'rozmain#index'
+      get 'catalog/*permalink', to: 'rozmain#category'
+      get 'product/:id', to: 'rozmain#product'
+      get 'reviews', to: 'rozmain#reviews'
+      # resources :reviews, only: [:index, :create]
+    end
+  
   end
 
+  
   namespace :admin do
     resources :reviews
   end
