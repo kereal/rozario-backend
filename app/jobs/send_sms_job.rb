@@ -5,7 +5,7 @@ class SendSmsJob < ApplicationJob
   queue_as :default
 
   def perform(phone, text)
-    Mts::SMS.send_sms(phone, text)
+    Mts::SMS.send(phone, text)
   end
 
 end

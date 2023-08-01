@@ -69,7 +69,8 @@ Spree::Core::Engine.routes.draw do
   
     resources :users, only: [] do
       post :request_auth, on: :collection
-      post :auth, on: :collection
+      post :auth,         on: :collection
+      get  :current,      on: :collection
     end
   
     # rozario API
@@ -83,7 +84,7 @@ Spree::Core::Engine.routes.draw do
   
   end
 
-  
+
   namespace :admin do
     resources :reviews
   end

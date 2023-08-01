@@ -2,6 +2,9 @@ module Rozario
   module Spree
     module UserDecorator
       
+      # можно перенести include Spree::UserMethods
+      # https://guides.solidus.io/advanced-solidus/custom-authentication
+
       def self.prepended(base)
         base.class_eval do
           def self.confirmation_token_lifetime
@@ -10,6 +13,13 @@ module Rozario
           validates :phone, uniqueness: true, allow_blank: true, format: { with: /\A\+[0-9]{11}\z/ }
           after_commit -> { request_auth_by(:phone) }, if: :saved_change_to_phone?, on: [:create, :update]
           after_commit -> { request_auth_by(:email) }, if: :saved_change_to_email?, on: [:create, :update]
+
+          validate :validate_avatar
+          has_one_attached :avatar do |attachable|
+            attachable.variant :mini, resize_to_limit: [48, 48]
+            attachable.variant :normal, resize_to_limit: [132, 132]
+            attachable.variant :large, resize_to_limit: [320, 320]
+          end
         end
       end
 
@@ -23,15 +33,11 @@ module Rozario
         update(last_request_at: Time.now, confirmation_token: generate_code, perishable_token: SecureRandom.hex(24))
 
         if method == :phone
-          unless Rails.env == "development"
-            SendSmsJob.perform_later phone, "Код для входа: #{confirmation_token}"
-          end
+          SendSmsJob.perform_later phone, "Код для входа: #{confirmation_token}" unless Rails.env == "development"
         end
 
         if method == :email
-          unless Rails.env == "development"
-            ::Spree::UserMailer.with(user: self).request_auth.deliver_later
-          end
+          ::Spree::UserMailer.with(user: self).request_auth.deliver_later unless Rails.env == "development"
         end
 
         puts ">> send code by #{method}: #{confirmation_token}" if Rails.env == "development"
@@ -40,6 +46,14 @@ module Rozario
       def authenticate_by_code
         return false if last_request_at && last_request_at < Time.now - self.class.confirmation_token_lifetime
         update(confirmed_at: Time.now, confirmation_token: nil, perishable_token: nil)
+      end
+
+      def avatar_url
+        avatar.url
+      end
+
+      def dob
+        I18n.l attributes["dob"]
       end
 
       protected
@@ -57,6 +71,17 @@ module Rozario
           code = '%04d' % Random.rand(2..9999)
         end while self.class.exists?(confirmation_token: code)
         code
+      end
+
+      def validate_avatar
+        return unless avatar.attached?
+        if avatar.image?
+          unless avatar.content_type.in?(::Spree::Config.allowed_image_mime_types)
+            errors.add(:avatar, :content_type_not_supported)
+          end
+        else
+          errors.add(:avatar, "не является изображением")
+        end
       end
 
      

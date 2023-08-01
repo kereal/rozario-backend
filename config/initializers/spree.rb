@@ -47,8 +47,22 @@ Spree.config do |config|
   #   server: Rails.env.production? ? 'production' : 'test',
   #   test_mode: !Rails.env.production?
   # )
-
 end
+
+
+Spree::Api::Config.configure do |config|
+  config.requires_authentication = true
+  config.user_attributes += [:phone, :name, :dob, :avatar_url, :notifications, :spree_api_key]
+end
+
+# Spree::PermittedAttributes.user_attributes += [:name, :dob, :notifications, :avatar]
+
+Spree::Auth::Config[:confirmable] = false
+
+Devise.setup do |config|
+  config.navigational_formats = ['*/*', :html, :turbo_stream]
+end
+
 
 Spree::Backend::Config.configure do |config|
   config.locale = 'ru'
@@ -65,16 +79,6 @@ Spree::Backend::Config.configure do |config|
   # config.frontend_product_path = ->(template_context, product) {
   #   template_context.spree.product_path(product)
   # }
-end
-
-Spree::Api::Config.configure do |config|
-  config.requires_authentication = true
-end
-
-Spree::Auth::Config[:confirmable] = false
-
-Devise.setup do |config|
-  config.navigational_formats = ['*/*', :html, :turbo_stream]
 end
 
 # Spree.user_class = "Spree::LegacyUser"

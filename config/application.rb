@@ -18,7 +18,7 @@ module Rozario
       port: 587,
       authentication: "plain",
       user_name: "robot@rozariofl.ru",
-      password: Rails.application.credentials.mail&.password
+      password: Rails.application.credentials.mail.password
     }
 
   end

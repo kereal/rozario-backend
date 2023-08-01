@@ -1,7 +1,7 @@
 module Mts
   class SMS
 
-    def self.send_sms(phone, text)
+    def self.send(phone, text)
       payload = {
         messages: [{
         content: { short_text: text },
@@ -20,11 +20,11 @@ module Mts
         Rails.logger.info "SMS sent, internal_id: #{message_id}"
         return true
       else
-        raise "SMS sending error: #{response.body}"
+        raise "SMS send error: #{response.body}"
       end
     end
 
-    def get_sms_info(id)
+    def get_info(id)
       conn = Faraday.new(url: "https://omnichannel.mts.ru/http-api/v1/messages/info") do |f|
         f.request :authorization, :basic, Rails.application.credentials.sms.login, Rails.application.credentials.sms.password
       end

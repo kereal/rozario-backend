@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_18_230525) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_25_223152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -1148,6 +1148,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_18_230525) do
     t.datetime "confirmation_sent_at", precision: nil
     t.string "unconfirmed_email"
     t.string "phone"
+    t.string "name"
+    t.date "dob"
+    t.json "notifications"
     t.index ["deleted_at"], name: "index_spree_users_on_deleted_at"
     t.index ["email"], name: "email_idx_unique", unique: true
     t.index ["phone"], name: "index_spree_users_on_phone", unique: true
