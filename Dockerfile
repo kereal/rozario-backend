@@ -18,7 +18,7 @@ RUN if [ "${RAILS_ENV}" != "development" ]; then SECRET_KEY_BASE=blabla rails as
 FROM ruby:3.2.2-alpine
 
 WORKDIR /app
-USER appuser
+#USER appuser
 
 RUN apk add --no-cache tzdata libpq-dev imagemagick vips nodejs \
   && addgroup --g 1003 appgroup && adduser -S -G appgroup -u 1002 appuser \
